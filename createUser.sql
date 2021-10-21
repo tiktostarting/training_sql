@@ -1,0 +1,8 @@
+alter session set "_ORACLE_SCRIPT"=TRUE;
+/
+
+CREATE USER tiktoContoh IDENTIFIED BY 12345678;
+/
+
+GRANT ALL PRIVILEGES TO tiktoContoh; 
+/

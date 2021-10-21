@@ -1,0 +1,3 @@
+1. create an object type
+2. create nested table of object types.
+3. Each OT attribute available as column in select statement

@@ -1,0 +1,4 @@
+1. function returns collection
+2. call function inside table cause
+3. collection and function must be known to sql
+4. use within select statement like any table or view!
