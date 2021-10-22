@@ -91,3 +91,6 @@ as
                         from table (doubled (
                             cursor (select * from stocks))))))
 /
+
+select * from more_stocks;
+/
