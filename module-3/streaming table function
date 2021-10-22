@@ -1,0 +1,4 @@
+1. table function accepts cursor variable 
+2. use cursor expression to pass in rows
+3. pass back array for table clause processing.
+4. repeat as often needed in statement.

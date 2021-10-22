@@ -1,38 +1,3 @@
-create table stocks
-(
-    ticker          varchar2(20),
-    trade_date      date,
-    open_price      number,
-    close_price     number
-)
-/
-
-begin
-    for indx in 1 .. 1000
-    loop
-        --might as well be optimistic!
-        insert into stocks
-            values ('STK' || indx,
-                    SYSDATE,
-                    indx,
-                    indx + 15);
-    end loop;
-    commit;
-end;
-/
-
-create type ticker_ot authid definer is object
-(
-    ticker      varchar2(20),
-    pricedate   date,
-    pricetype   varchar2(1),
-    price       number
-);
-/
-
-create type tickers_nt as table of ticker_ot;
-/
-
 create or replace package stock_mgr
     authid definer
 is 
@@ -87,4 +52,42 @@ select count (*) from tickers
 select *
     from tickers
         fetch first 10 rows only
+/
+
+create or replace function singled (tickers_in in stock_mgr.ticker_rc)
+    return stocks_nt authid definer
+is
+    type tickers_aat is table of tickers%ROWTYPE index by pls_integer;
+    l_tickers       tickers_aat;
+
+    l_singles       stocks_nt := stocks_nt ();
+begin 
+    loop 
+        fetch tickers_in bulk collect into l_tickers limit 100;
+        exit when l_tickers.count = 0;
+
+        for indx in 1 .. l_tickers.count
+        loop
+            l_singles.extend;
+            l_singles (l_singles.last) :=
+                stock_ot (l_tickers (indx).ticker,
+                    l_tickers (indx).pricedate,
+                    l_tickers (indx).price,
+                    l_tickers (indx).price * .5);
+        end loop;
+    end loop;
+
+    return l_singles;
+end;
+/
+
+create table more_stocks
+as 
+    select * 
+        from table (
+            singled (
+                cursor (
+                    select *
+                        from table (doubled (
+                            cursor (select * from stocks))))))
 /
