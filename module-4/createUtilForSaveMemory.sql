@@ -49,3 +49,24 @@ is
     end;
 end;
 /
+
+begin
+    utils.initialize('Pipelined');
+    
+    insert into tickers
+        select *
+            from table (doubled_pl (cursor (select * from stocks)))
+        where rownum < 10;
+        
+    utils.show_results ('First 9 rows');
+    
+    utils.initialize ('Not Pipelined');
+    
+    insert into tickers
+        select *
+            from table (double_nopl (cursor (select * from stocks)))
+        where rownum < 10;
+        
+    utils.show_results ('First 9 rows');
+end;
+/
