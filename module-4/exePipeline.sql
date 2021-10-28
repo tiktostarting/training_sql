@@ -1,10 +1,18 @@
-select count(*) from tickers
+select count(*) from tickers;
 /
 
 insert into tickers 
     select * 
-        from table (doubled_pl (cursor (select * from stocks)))
+        from table (doubled_pl (cursor (select * from stocks)));
 /
 
-select * from tickers 
+insert into tickers
+    select *
+        from table (doubled_nopl (cursor (select * from stocks)));
+/
+
+delete from tickers;
+/
+
+select * from tickers;
 /

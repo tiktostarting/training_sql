@@ -34,19 +34,19 @@ is
         last_pga := pga_consumed;
     end;
 
-    procedure show_results (message_in in varchar2 := null)
-    is
-        l_count integer;
-    begin
-        select count (*) into l_count from tickers;
+   procedure show_results (message_in in varchar2 := null)
+   is
+       l_count integer;
+   begin
+       select count (*) into l_count from tickers;
 
-        dbms_output.put_line ('Ticker row count: ' || l_count);
+       dbms_output.put_line ('Ticker row count: ' || l_count);
 
-        dbms_output.put_line(
-            '"' || message_in || '" completed in: ' ||
-            to_char (dbms_utility.get_time - last_timing)||' pga at: '||
-            to_char (pga_consumed() - last_pga));
-    end;
+       dbms_output.put_line(
+           '"' || message_in || '" completed in: ' ||
+           to_char (dbms_utility.get_time - last_timing)||' pga at: '||
+           to_char (pga_consumed() - last_pga));
+   end;
 end;
 /
 
@@ -64,7 +64,7 @@ begin
     
     insert into tickers
         select *
-            from table (double_nopl (cursor (select * from stocks)))
+            from table (doubled_nopl (cursor (select * from stocks)))
         where rownum < 10;
         
     utils.show_results ('First 9 rows');

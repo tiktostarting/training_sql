@@ -1,4 +1,6 @@
 drop type stocks;
+
+drop table stocks;
 /
 
 create table stocks
@@ -16,5 +18,5 @@ insert into stocks
         level,
         level + 15
     from dual
-    connect by level <= 200000
+    connect by level <= 2000;
 /

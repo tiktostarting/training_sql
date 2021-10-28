@@ -1,4 +1,5 @@
-create or replace function doubled_nopl (rows_in stock_mgr.stocks_rc) return tickers_nt
+create or replace function doubled_nopl (rows_in stock_mgr.stocks_rc) 
+    return tickers_nt
 is
     type stocks_aat is table of stocks%rowtype index by pls_integer;
     l_stocks    stocks_aat;

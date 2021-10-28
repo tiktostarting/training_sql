@@ -21,3 +21,6 @@ is
     type stocks_rc is ref cursor return stocks%rowtype;
 end stock_mgr;
 /
+
+create table tickers of ticker_ot;
+/
