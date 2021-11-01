@@ -3,7 +3,7 @@
 set serveroutput on;
 
 declare 
-    p1  pls_integer := 2147483647;
+    p1  pls_integer := 2147483648;
     p2  integer := 1;
     n   number;
 begin
